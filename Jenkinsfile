@@ -2,10 +2,8 @@ pipeline {
     agent any
 
     tools {
-        // ⚠️ Les noms DOIVENT être exactement
-        // ceux définis dans "Global Tool Configuration"
-        jdk 'JDK-17'
-        maven 'Maven-3.9.6'
+        jdk 'JAVA_HOME'
+        maven 'M2_HOME'
     }
 
     stages {
