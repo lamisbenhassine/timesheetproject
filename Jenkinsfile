@@ -2,25 +2,39 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JAVA_HOME'
-        maven 'M2_HOME'
+        // ⚠️ Les noms DOIVENT être exactement
+        // ceux définis dans "Global Tool Configuration"
+        jdk 'JDK-17'
+        maven 'Maven-3.9.6'
     }
 
     stages {
 
-        stage('Checkout') {
+        stage('Check Java') {
             steps {
-                git branch: 'master',
-                    url: 'https://github.com/hwafa/timesheetproject.git'
+                sh 'java -version'
             }
         }
 
-        stage('Compile') {
+        stage('Check Maven') {
             steps {
-                sh 'java -version'
                 sh 'mvn -version'
+            }
+        }
+
+        stage('Build') {
+            steps {
                 sh 'mvn clean compile'
             }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ BUILD SUCCESS'
+        }
+        failure {
+            echo '❌ BUILD FAILED'
         }
     }
 }
